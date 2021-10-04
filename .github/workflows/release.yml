@@ -32,23 +32,23 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Checkout monument
-        uses: actions/checkout@v2
-        with:
-          clean: false
-          ref: monument
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Checkout classic
-        uses: actions/checkout@v2
-        with:
-          clean: false
-          ref: classic
-
-      - name: Build with Gradle
-        run: ./gradlew build
+#      - name: Checkout monument
+#        uses: actions/checkout@v2
+#        with:
+#          clean: false
+#          ref: monument
+#
+#      - name: Build with Gradle
+#        run: ./gradlew build
+#
+#      - name: Checkout classic
+#        uses: actions/checkout@v2
+#        with:
+#          clean: false
+#          ref: classic
+#
+#      - name: Build with Gradle
+#        run: ./gradlew build
 
       - name: Create Release
         id: create_release
