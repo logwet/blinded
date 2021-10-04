@@ -1,12 +1,12 @@
-package me.logwet.noverworld;
+package me.logwet.blinded;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.logwet.noverworld.config.*;
-import me.logwet.noverworld.mixin.common.HungerManagerAccessor;
-import me.logwet.noverworld.mixin.common.ServerPlayerEntityAccessor;
-import me.logwet.noverworld.util.ItemsMapping;
-import me.logwet.noverworld.util.WeightedCollection;
+import me.logwet.blinded.config.*;
+import me.logwet.blinded.mixin.common.HungerManagerAccessor;
+import me.logwet.blinded.mixin.common.ServerPlayerEntityAccessor;
+import me.logwet.blinded.util.ItemsMapping;
+import me.logwet.blinded.util.WeightedCollection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
@@ -35,19 +35,19 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Noverworld {
-    public static final String VERSION = FabricLoader.getInstance().getModContainer("noverworld").get().getMetadata().getVersion().getFriendlyString();
+public class Blinded {
+    public static final String VERSION = FabricLoader.getInstance().getModContainer("blinded").get().getMetadata().getVersion().getFriendlyString();
 
 //	I would like to use this first implementation as it is the suggested and recommended way of doing things with fabric.
 //	Unfortunately, it has strange behaviour in my dev environment I don't have the time to trouble shoot
-//	public static final Path CONFIG_FILE_PATH = FabricLoader.getInstance().getConfigDir().resolve("noverworld.json");
+//	public static final Path CONFIG_FILE_PATH = FabricLoader.getInstance().getConfigDir().resolve("blinded.json");
 
-    public static final Path CONFIG_FILE_PATH = Paths.get("config/noverworld-" + VERSION + ".json").toAbsolutePath();
+    public static final Path CONFIG_FILE_PATH = Paths.get("config/blinded-" + VERSION + ".json").toAbsolutePath();
 
     public static final boolean IS_CLIENT = FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
 
-    private static final Logger logger = LogManager.getLogger("Noverworld");
-    public static NoverworldConfig config;
+    private static final Logger logger = LogManager.getLogger("Blinded");
+    public static BlindedConfig config;
     private static FixedConfig fixedConfig;
     private static boolean newWorld = false;
     private static Set<UUID> initializedPlayers;
@@ -64,7 +64,7 @@ public class Noverworld {
     private static BlockPos spawnPos = new BlockPos(0, 9, 0);
 
     public static void log(Level level, String message) {
-        logger.log(level, "[Noverworld] " + message);
+        logger.log(level, "[Blinded] " + message);
     }
 
     public static void playerLog(Level level, String message, ServerPlayerEntity serverPlayerEntity) {
@@ -76,7 +76,7 @@ public class Noverworld {
     }
 
     public static void setNewWorld(boolean newWorld) {
-        Noverworld.newWorld = newWorld;
+        Blinded.newWorld = newWorld;
     }
 
     public static Set<UUID> getInitializedPlayers() {
@@ -84,7 +84,7 @@ public class Noverworld {
     }
 
     public static void setInitializedPlayers(Set<UUID> initializedPlayers) {
-        Noverworld.initializedPlayers = initializedPlayers;
+        Blinded.initializedPlayers = initializedPlayers;
     }
 
     private static void clearInitializedPlayers() {
@@ -194,7 +194,7 @@ public class Noverworld {
 
     public static void readFixedConfigs() {
         fixedConfig = new Gson().fromJson(new InputStreamReader(Objects.requireNonNull(
-                Noverworld.class.getResourceAsStream("/fixed_config.json"))), FixedConfig.class);
+                Blinded.class.getResourceAsStream("/fixed_config.json"))), FixedConfig.class);
 
         uniqueFixedConfigItems = fixedConfig.getUniqueItems();
         nonUniqueFixedConfigItems = fixedConfig.getNonUniqueItems();
@@ -211,14 +211,14 @@ public class Noverworld {
     }
 
     private static void readConfig() throws FileNotFoundException {
-        config = new Gson().fromJson(new FileReader(CONFIG_FILE_PATH.toFile()), NoverworldConfig.class);
+        config = new Gson().fromJson(new FileReader(CONFIG_FILE_PATH.toFile()), BlindedConfig.class);
     }
 
     private static void saveConfig() {
         try {
             List<InventoryItemEntry> newConfigInventory = new ArrayList<>();
             uniqueFixedConfigItems.forEach((name, attributes) -> newConfigInventory.add(new InventoryItemEntry(name, attributes[2] + 1)));
-            config = new NoverworldConfig();
+            config = new BlindedConfig();
             config.setInventory(newConfigInventory);
 
             PrintWriter writer = new PrintWriter(CONFIG_FILE_PATH.toFile());
@@ -376,7 +376,7 @@ public class Noverworld {
 
             playerLog(Level.INFO, "Finished server side actions", serverPlayerEntity);
         } else {
-            playerLog(Level.INFO, "Noverworld will not handle player", serverPlayerEntity);
+            playerLog(Level.INFO, "Blinded will not handle player", serverPlayerEntity);
         }
     }
 

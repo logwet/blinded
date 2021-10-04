@@ -1,18 +1,18 @@
-package me.logwet.noverworld.config;
+package me.logwet.blinded.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NoverworldConfig {
+public class BlindedConfig {
     private boolean f3Enabled = true;
 
     private boolean recipeBookEnabled = true;
 
     private List<InventoryItemEntry> inventory;
 
-    public NoverworldConfig() {
+    public BlindedConfig() {
         inventory = new ArrayList<>();
     }
 

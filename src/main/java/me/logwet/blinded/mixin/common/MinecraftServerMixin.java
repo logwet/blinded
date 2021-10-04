@@ -1,6 +1,6 @@
-package me.logwet.noverworld.mixin.common;
+package me.logwet.blinded.mixin.common;
 
-import me.logwet.noverworld.Noverworld;
+import me.logwet.blinded.Blinded;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,11 +19,11 @@ public class MinecraftServerMixin {
             method = "prepareStartRegion"
     )
     private void prepareStartRegion(WorldGenerationProgressListener worldGenerationProgressListener, CallbackInfo ci) {
-        Noverworld.onWorldGenStart();
+        Blinded.onWorldGenStart();
     }
 
     @Inject(at = @At("TAIL"), method = "loadWorld")
     private void loadWorld(CallbackInfo ci) {
-        Noverworld.onWorldGenComplete();
+        Blinded.onWorldGenComplete();
     }
 }

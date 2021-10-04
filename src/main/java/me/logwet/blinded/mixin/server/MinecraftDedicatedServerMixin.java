@@ -1,6 +1,6 @@
-package me.logwet.noverworld.mixin.server;
+package me.logwet.blinded.mixin.server;
 
-import me.logwet.noverworld.Noverworld;
+import me.logwet.blinded.Blinded;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftDedicatedServerMixin {
     @Inject(at = @At("HEAD"), method = "setupServer")
     private void setupServer(CallbackInfoReturnable<Boolean> cir) {
-        Noverworld.setMS((MinecraftServer) (Object) this);
+        Blinded.setMS((MinecraftServer) (Object) this);
     }
 }

@@ -1,4 +1,4 @@
-package me.logwet.noverworld;
+package me.logwet.blinded;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 
 import java.util.Objects;
 
-public class NoverworldClient implements ClientModInitializer {
+public class BlindedClient implements ClientModInitializer {
 	private static MinecraftClient MC;
 	private static double oldRenderDistance;
 	private static double oldFOV;
@@ -30,21 +30,21 @@ public class NoverworldClient implements ClientModInitializer {
 		oldRenderDistance = Option.RENDER_DISTANCE.get(getMC().options);
 		oldFOV = Option.FOV.get(getMC().options);
 
-		Noverworld.log(Level.INFO, "Saved Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
+		Blinded.log(Level.INFO, "Saved Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
 	}
 
 	public static void resetOptions() {
 		Option.RENDER_DISTANCE.set(getMC().options, oldRenderDistance);
 		Option.FOV.set(getMC().options, oldFOV);
 
-		Noverworld.log(Level.INFO, "Reset to Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
+		Blinded.log(Level.INFO, "Reset to Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
 	}
 
 	private static void openF3() {
 		try {
-			if (Noverworld.config.isF3Enabled()) {
+			if (Blinded.config.isF3Enabled()) {
 				getMC().options.debugEnabled = true;
-				Noverworld.log(Level.INFO, "Opened F3 menu");
+				Blinded.log(Level.INFO, "Opened F3 menu");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,12 +53,12 @@ public class NoverworldClient implements ClientModInitializer {
 
 	private static void openRecipeBook() {
 		try {
-			if (Noverworld.config.isRecipeBookEnabled()) {
+			if (Blinded.config.isRecipeBookEnabled()) {
 				getClientPlayerEntity().getRecipeBook().setGuiOpen(true);
 				Objects.requireNonNull(getMC().getNetworkHandler()).sendPacket(
 						new RecipeBookDataC2SPacket(true, true, false, false, false, false)
 				);
-				Noverworld.log(Level.INFO, "Opened recipe book");
+				Blinded.log(Level.INFO, "Opened recipe book");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,15 +68,15 @@ public class NoverworldClient implements ClientModInitializer {
 	public static void onClientJoin() {
 		openF3();
 		openRecipeBook();
-		Noverworld.log(Level.INFO, "Finished client side actions");
+		Blinded.log(Level.INFO, "Finished client side actions");
 	}
 
 	@Override
 	public void onInitializeClient() {
-		Noverworld.log(Level.INFO, "Using Noverworld v" + Noverworld.VERSION + " by logwet!");
+		Blinded.log(Level.INFO, "Using Blinded v" + Blinded.VERSION + " by logwet!");
 
 		setMC(MinecraftClient.getInstance());
 
-		Noverworld.commonConfigHandler();
+		Blinded.commonConfigHandler();
 	}
 }

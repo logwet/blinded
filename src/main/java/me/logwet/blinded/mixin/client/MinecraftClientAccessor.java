@@ -1,4 +1,4 @@
-package me.logwet.noverworld.mixin.client;
+package me.logwet.blinded.mixin.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

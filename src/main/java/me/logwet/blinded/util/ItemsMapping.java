@@ -1,6 +1,6 @@
-package me.logwet.noverworld.util;
+package me.logwet.blinded.util;
 
-import me.logwet.noverworld.Noverworld;
+import me.logwet.blinded.Blinded;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class ItemsMapping {
                  (such as tools) anywhere on the GitHub repo. I'm not sure where the JavaDoc is sourcing its info from
                  */
                 new InputStreamReader(
-                        Objects.requireNonNull(Noverworld.class.getResourceAsStream("/Items.mapping"))))) {
+                        Objects.requireNonNull(Blinded.class.getResourceAsStream("/Items.mapping"))))) {
             while ((rawLine = br.readLine()) != null) {
                 line = rawLine.trim().split(" ");
                 mappings.put(line[1], line[0]);

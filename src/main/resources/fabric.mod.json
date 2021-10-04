@@ -1,34 +1,36 @@
 {
   "schemaVersion": 1,
-  "id": "noverworld",
+  "id": "blinded",
   "version": "${version}",
-  "accessWidener": "noverworld.accesswidener",
-  "name": "Noverworld",
-  "description": "Spawn in the nether with a custom hotbar. Idea by Fyroah and k4yfour",
+  "accessWidener": "blinded.accesswidener",
+  "name": "Blinded",
+  "description": "Spawn in the overworld at post blind coords with a typical post nether split inventory. Based on the codebase of noverworld. Idea and implementation by logwet.",
   "authors": [
     "logwet"
   ],
   "contact": {
-    "homepage": "https://github.com/logwet/noverworld",
-    "sources": "https://github.com/logwet/noverworld"
+    "homepage": "https://github.com/logwet/blinded",
+    "sources": "https://github.com/logwet/blinded"
   },
   "license": "GPL-3.0",
-  "icon": "assets/noverworld/icon.png",
+  "icon": "assets/blinded/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "me.logwet.noverworld.NoverworldClient"
+      "me.logwet.blinded.BlindedClient"
     ],
     "server": [
-      "me.logwet.noverworld.NoverworldServer"
+      "me.logwet.blinded.BlindedServer"
     ]
   },
   "mixins": [
-    "noverworld.mixins.json"
+    "blinded.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "minecraft": "1.16.1"
+  },
+  "breaks": {
+    "noverworld": "*"
   }
 }

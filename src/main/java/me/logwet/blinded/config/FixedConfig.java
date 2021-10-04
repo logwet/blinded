@@ -1,4 +1,4 @@
-package me.logwet.noverworld.config;
+package me.logwet.blinded.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;

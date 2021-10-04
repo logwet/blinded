@@ -1,7 +1,7 @@
-package me.logwet.noverworld.mixin.client;
+package me.logwet.blinded.mixin.client;
 
-import me.logwet.noverworld.Noverworld;
-import me.logwet.noverworld.NoverworldClient;
+import me.logwet.blinded.Blinded;
+import me.logwet.blinded.BlindedClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -17,12 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("TAIL"), method = "onGameJoin")
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
-        Noverworld.log(Level.INFO, "Connected Clientside");
+        Blinded.log(Level.INFO, "Connected Clientside");
 
-        NoverworldClient.saveOldOptions();
+        BlindedClient.saveOldOptions();
 
-        Noverworld.refreshConfigs();
+        Blinded.refreshConfigs();
 
-        NoverworldClient.onClientJoin();
+        BlindedClient.onClientJoin();
     }
 }

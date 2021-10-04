@@ -1,4 +1,4 @@
-package me.logwet.noverworld.config;
+package me.logwet.blinded.config;
 
 public class NonUniqueItem {
     private final String name;
