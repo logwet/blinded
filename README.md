@@ -1,25 +1,17 @@
-# Noverworld
+# Blinded
 
 ## About
 
-When you create a new world, you will spawn in the nether at a portal.
-Your inventory contains a set of standard nether entry items you would have in a usual hypermodern RSG situation where
-you intend to do bastion trades. Beat the dragon and reach the credits as usual.
+When you create a new world, you will spawn in the overworld at a portal at post blind coords (radius 1200-1800).
+Your inventory contains a set of standard post blind items you would have in a usual hypermodern RSG situation where
+you did bastion trades. Beat the dragon and reach the credits as usual.
 
-![bastion inventory](assets/bastion_inventory.png)
+![educated inventory](assets/educated_inventory.png)
 
-_The bundled inventory for the `Bastion`/default category_
-
-![monument inventory](assets/monument_inventory.png)
-
-_The bundled inventory for the `Monument` category_
-
-![classic inventory](assets/classic_inventory.png)
-
-_The bundled inventory for the `Classic` category_
+_The bundled inventory for the default config_
 
 You cannot customise the number, type or durability of the items in your inventory but you can adjust what slot they're in.
-You do this through editing `.minecraft/config/noverworld-X.X.X.json`.
+You do this through editing `.minecraft/config/blinded-X.X.X.json`.
 
 _(At the moment the slot of unstackable non-unique items, eg. the beds in classic, are not changeable. This may change
 in the future.)_
@@ -46,8 +38,8 @@ in the future.)_
 
 _The slots to inventory mapping. ie. if you want to put something in the hotbar, use slot 41._
 
-Every new release of noverworld will create a new config file, so if you want to use your slot config from the previous
-version copy it over. This is to allow players to easily use different releases of the mod (eg. Bastion to Monument)
+Every new release of blinded will create a new config file, so if you want to use your slot config from the previous
+version copy it over. This is to allow players to easily use different releases of the mod
 at the same time without having to delete their config file every time.
 
 Before you join a new world the mod saves your render distance and FOV, and resets to this after you leave the world.
@@ -74,23 +66,24 @@ If you have a problem with the mod, a question or experience a crash follow thes
 
 ## FAQ
 
+- Is this mod compatible with Noverworld
+  - For what I hope are obvious reasons, no, it is not compatible at all, and probably will crash.
 - How do I download the mod?
-  - The [releases](https://github.com/logwet/noverworld/releases/) page on this GitHub repo.
+  - The [releases](https://github.com/logwet/blinded/releases/) page on this GitHub repo.
 - What file do I download? There's a bunch.
-  - There are three groups, one for each category (`BASTION`, `MONUMENT` and `CLASSIC`). Refer to the start of this README for the differences between each category.
-  - Then download the release version of the mod ie. `noverworld-x.x.x.jar` instead of `noverworld-x-x-x-dev.jar` and put it in your mods folder.
+  - Then download the release version of the mod ie. `blinded-x.x.x.jar` instead of `blinded-x-x-x-dev.jar` and put it in your mods folder.
 - How do I change the hotbar/inventory?
-  - Using the config file at `.minecraft/config/noverworld-X.X.X.json`.
+  - Using the config file at `.minecraft/config/blinded-X.X.X.json`.
 - How do I change what items are in my hotbar/inventory?
-  - You can't easily do so. The three Noverworld categories have fixed inventories, you can change the slots your items are in but not their type, durability or count.
+  - You can't easily do so. The three blinded categories have fixed inventories, you can change the slots your items are in but not their type, durability or count.
   - If you __really__ want to change the items, you can do so by editing `fixed_config.json` and recompiling the mod, but beware that this will make your runs unverifiable for the leaderboards.
 - How do I reset my hotbar to the default included in the mod?
-  - Delete the config file at `.minecraft/config/noverworld-X.X.X.json`. When you create a new world or reload the game the defaults will be applied.
+  - Delete the config file at `.minecraft/config/blinded-X.X.X.json`. When you create a new world or reload the game the defaults will be applied.
 - I updated the mod and my inventory slot config has been reset, what gives?
   - Every new version of the mod writes a new file, just copy your settings over. Read above for an explanation of why.
 - How do I set my FOV and render distance default?
   - Edit those values in the game's main menu (ie. outside of a world) and they'll be saved.
-- I want to run noverworld without f3
+- I want to run blinded without f3
   - Set `f3Enabled` to `false` in the config file. This won't automatically open f3 before you spawn.
 - I don't book craft so I don't want the recipe book to be automatically opened by default.
   - Set `recipeBookEnabled` to `false` in the config file. This won't automatically open the recipe book pane before you spawn.
@@ -98,7 +91,7 @@ If you have a problem with the mod, a question or experience a crash follow thes
   - Make a GitHub issue and include as much information as you can.
   - Or message me on Discord.
 - The mod is crashing while launching with `java.lang.reflect.InvocationTargetException`
-  - Make sure you are running the release version of the mod ie. `noverworld-x.x.x.jar` instead of `noverworld-x-x-x-dev.jar`
+  - Make sure you are running the release version of the mod ie. `blinded-x.x.x.jar` instead of `blinded-x-x-x-dev.jar`
 - Is this incompatible with any mods:
   - This mod has been tested and confirmed to work with:
     - Sodium
@@ -113,4 +106,4 @@ If you have a problem with the mod, a question or experience a crash follow thes
 
 Contributions are welcome. This mod is licensed under the GPL-3.0, meaning any forks/derivative works must also be open
 source and licensed under the GPL-3.0. If you fork the mod and publish the distribution (without the intention of
-merging your changes upstream) please change the name from Noverworld to a suitably distinct alternative to avoid confusion.
+merging your changes upstream) please change the name from Blinded to a suitably distinct alternative to avoid confusion.
