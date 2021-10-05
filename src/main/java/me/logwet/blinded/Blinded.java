@@ -16,6 +16,8 @@ import net.minecraft.item.Wearable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
@@ -333,7 +335,9 @@ public class Blinded {
         playerLog(Level.INFO, "Overwrote player inventory with configured items", serverPlayerEntity);
     }
 
-    private static void sendToNether(ServerPlayerEntity serverPlayerEntity) {
+    private static void sendToBlind(ServerPlayerEntity serverPlayerEntity) {
+        serverPlayerEntity.sendMessage(new LiteralText("Please wait for chunks at target to be generated.").formatted(Formatting.RED), true);
+
         serverPlayerEntity.yaw = spawnYaw;
 
         serverPlayerEntity.setPos(spawnPos.getX()+0.5d, spawnPos.getY(), spawnPos.getZ()+0.5d);
@@ -341,10 +345,16 @@ public class Blinded {
 
         playerLog(Level.INFO, "Attemping spawn at " + spawnPos.toShortString() + " with yaw " + serverPlayerEntity.yaw, serverPlayerEntity);
 
-        serverPlayerEntity.changeDimension(getNether());
+        if (!getOverworld().getPortalForcer().usePortal(serverPlayerEntity, 0)) {
+            getOverworld().getPortalForcer().createPortal(serverPlayerEntity);
+            getOverworld().getPortalForcer().usePortal(serverPlayerEntity, 0);
+        }
+
         serverPlayerEntity.netherPortalCooldown = serverPlayerEntity.getDefaultNetherPortalCooldown();
 
-        playerLog(Level.INFO, "Sent to nether", serverPlayerEntity);
+        serverPlayerEntity.sendMessage(new LiteralText(""), true);
+
+        playerLog(Level.INFO, "Sent to blind", serverPlayerEntity);
     }
 
     private static void disableSpawnInvulnerability(ServerPlayerEntity serverPlayerEntity) {
@@ -369,7 +379,7 @@ public class Blinded {
         if (isNewWorld() && getInitializedPlayers().add(serverPlayerEntity.getUuid())) {
             playerLog(Level.INFO, "Player connected and recognised", serverPlayerEntity);
 
-            sendToNether(serverPlayerEntity);
+            sendToBlind(serverPlayerEntity);
             setPlayerInventory(serverPlayerEntity);
             setPlayerAttributes(serverPlayerEntity);
             disableSpawnInvulnerability(serverPlayerEntity);
