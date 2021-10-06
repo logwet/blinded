@@ -9,6 +9,7 @@ import me.logwet.blinded.util.ItemsMapping;
 import me.logwet.blinded.util.WeightedCollection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,6 +23,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
@@ -270,8 +272,7 @@ public class Blinded {
 
     // Thank god for reflection ThankEgg
     private static ItemStack getItemStackFromName(String name) {
-        Objects.requireNonNull(name);
-        name = name.toUpperCase();
+        name = Objects.requireNonNull(name).toUpperCase();
         try {
             String target;
 
@@ -308,11 +309,15 @@ public class Blinded {
             itemStack.setDamage(itemAttributes[1]);
         }
 
-        serverPlayerEntity.inventory.insertStack(itemAttributes[2], itemStack);
+        int slot = itemAttributes[2];
+
+        serverPlayerEntity.inventory.insertStack(slot, itemStack.copy());
+        Criteria.INVENTORY_CHANGED.trigger(serverPlayerEntity, serverPlayerEntity.inventory, itemStack);
     }
 
     private static void setPlayerInventory(ServerPlayerEntity serverPlayerEntity) {
-        stopAdvancementDisplay();
+        stopAdvancementDisplay(serverPlayerEntity);
+
         config.getItems().forEach((slot, name) -> {
             slot -= 1;
             if (uniqueFixedConfigItems.containsKey(name)) {
@@ -334,14 +339,20 @@ public class Blinded {
 
         nonUniqueFixedConfigItems.forEach(nonUniqueItem -> {
             ItemStack itemStack = getItemStackFromName(nonUniqueItem.getName());
-
             applyItemStack(itemStack, nonUniqueItem.getAttributes(), serverPlayerEntity);
         });
 
-        serverPlayerEntity.playerScreenHandler.sendContentUpdates();
-        startAdvancementDisplay();
-
+        startAdvancementDisplay(serverPlayerEntity);
         playerLog(Level.INFO, "Overwrote player inventory with configured items", serverPlayerEntity);
+    }
+
+    private static void openRecipeBook(ServerPlayerEntity serverPlayerEntity) {
+        if (config.isRecipeBookEnabled()) {
+            serverPlayerEntity.getRecipeBook().setGuiOpen(true);
+            serverPlayerEntity.getRecipeBook().setFilteringCraftable(true);
+
+            playerLog(Level.INFO, "Opened recipe book", serverPlayerEntity);
+        }
     }
 
     private static void unlockRecipes(ServerPlayerEntity serverPlayerEntity) {
@@ -354,20 +365,20 @@ public class Blinded {
         playerLog(Level.INFO, "Unlocked recipes", serverPlayerEntity);
     }
 
-    private static void stopAdvancementDisplay() {
-        getNether().getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(false, getMS());
+    private static void stopAdvancementDisplay(ServerPlayerEntity serverPlayerEntity) {
+        serverPlayerEntity.world.getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(false, null);
     }
 
-    private static void startAdvancementDisplay() {
-        getNether().getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(true, getMS());
+    private static void startAdvancementDisplay(ServerPlayerEntity serverPlayerEntity) {
+        serverPlayerEntity.world.getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(true, null);
     }
 
     private static void sendToBlind(ServerPlayerEntity serverPlayerEntity) {
         serverPlayerEntity.sendMessage(new LiteralText("Please wait for chunks at target to be generated.").formatted(Formatting.RED), true);
 
-        serverPlayerEntity.yaw = spawnYaw;
+        serverPlayerEntity.refreshPositionAndAngles(spawnPos, spawnYaw, 0);
+        serverPlayerEntity.setVelocity(Vec3d.ZERO);
 
-        serverPlayerEntity.setPos(spawnPos.getX()+0.5d, spawnPos.getY(), spawnPos.getZ()+0.5d);
         serverPlayerEntity.setInNetherPortal(spawnPos);
 
         playerLog(Level.INFO, "Attemping spawn at " + spawnPos.toShortString() + " with yaw " + serverPlayerEntity.yaw, serverPlayerEntity);
@@ -408,6 +419,7 @@ public class Blinded {
 
             sendToBlind(serverPlayerEntity);
             setPlayerInventory(serverPlayerEntity);
+            openRecipeBook(serverPlayerEntity);
             unlockRecipes(serverPlayerEntity);
             setPlayerAttributes(serverPlayerEntity);
             disableSpawnInvulnerability(serverPlayerEntity);

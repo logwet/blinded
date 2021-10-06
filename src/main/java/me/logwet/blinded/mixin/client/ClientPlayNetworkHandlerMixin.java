@@ -19,10 +19,9 @@ public class ClientPlayNetworkHandlerMixin {
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo ci) {
         Blinded.log(Level.INFO, "Connected Clientside");
 
-        BlindedClient.saveOldOptions();
-
         Blinded.refreshConfigs();
 
+        BlindedClient.saveOldOptions();
         BlindedClient.onClientJoin();
     }
 }
