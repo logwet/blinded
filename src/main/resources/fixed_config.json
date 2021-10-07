@@ -16,7 +16,7 @@
   "inventory": [
     {
       "name": "WOODEN_AXE",
-      "count": 1,
+      "count": "1-1",
       "damage": 30,
       "slot": 0,
       "editable": true,
@@ -24,7 +24,7 @@
     },
     {
       "name": "IRON_PICKAXE",
-      "count": 1,
+      "count": "1-1",
       "damage": 60,
       "slot": 1,
       "editable": true,
@@ -32,7 +32,7 @@
     },
     {
       "name": "IRON_SHOVEL",
-      "count": 1,
+      "count": "1-1",
       "damage": 10,
       "slot": 2,
       "editable": true,
@@ -40,7 +40,7 @@
     },
     {
       "name": "LAVA_BUCKET",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 3,
       "editable": true,
@@ -48,7 +48,7 @@
     },
     {
       "name": "GRAVEL",
-      "count": 54,
+      "count": "54-54",
       "damage": 0,
       "slot": 4,
       "editable": true,
@@ -56,7 +56,7 @@
     },
     {
       "name": "OAK_BOAT",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 5,
       "editable": true,
@@ -64,7 +64,7 @@
     },
     {
       "name": "CRAFTING_TABLE",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 6,
       "editable": true,
@@ -72,7 +72,7 @@
     },
     {
       "name": "FLINT_AND_STEEL",
-      "count": 1,
+      "count": "1-1",
       "damage": 2,
       "slot": 7,
       "editable": true,
@@ -80,7 +80,7 @@
     },
     {
       "name": "ENDER_PEARL",
-      "count": 14,
+      "count": "14-14",
       "damage": 0,
       "slot": 8,
       "editable": true,
@@ -88,7 +88,7 @@
     },
     {
       "name": "IRON_INGOT",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 9,
       "editable": true,
@@ -96,7 +96,7 @@
     },
     {
       "name": "OAK_PLANKS",
-      "count": 13,
+      "count": "13-13",
       "damage": 0,
       "slot": 10,
       "editable": true,
@@ -104,7 +104,7 @@
     },
     {
       "name": "STRING",
-      "count": 60,
+      "count": "60-60",
       "damage": 0,
       "slot": 11,
       "editable": true,
@@ -112,7 +112,7 @@
     },
     {
       "name": "STICK",
-      "count": 2,
+      "count": "2-2",
       "damage": 0,
       "slot": 12,
       "editable": true,
@@ -120,7 +120,7 @@
     },
     {
       "name": "BLAZE_ROD",
-      "count": 6,
+      "count": "6-6",
       "damage": 0,
       "slot": 13,
       "editable": true,
@@ -128,7 +128,7 @@
     },
     {
       "name": "OBSIDIAN",
-      "count": 10,
+      "count": "10-10",
       "damage": 0,
       "slot": 14,
       "editable": true,
@@ -136,7 +136,7 @@
     },
     {
       "name": "CRYING_OBSIDIAN",
-      "count": 4,
+      "count": "4-4",
       "damage": 0,
       "slot": 15,
       "editable": true,
@@ -144,7 +144,7 @@
     },
     {
       "name": "ARROW",
-      "count": 15,
+      "count": "15-15",
       "damage": 0,
       "slot": 16,
       "editable": true,
@@ -152,7 +152,7 @@
     },
     {
       "name": "NETHER_BRICK",
-      "count": 64,
+      "count": "64-64",
       "damage": 0,
       "slot": 17,
       "editable": true,
@@ -160,7 +160,7 @@
     },
     {
       "name": "GOLDEN_BOOTS",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 36,
       "editable": true,
@@ -168,7 +168,7 @@
     },
     {
       "name": "GOLDEN_CHESTPLATE",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 38,
       "editable": true,
@@ -176,7 +176,7 @@
     },
     {
       "name": "BREAD",
-      "count": 1,
+      "count": "1-1",
       "damage": 0,
       "slot": 40,
       "editable": true,

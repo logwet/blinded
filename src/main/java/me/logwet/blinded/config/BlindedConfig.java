@@ -1,7 +1,5 @@
 package me.logwet.blinded.config;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
