@@ -1,9 +1,8 @@
 package me.logwet.blinded.config;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FixedConfig {
     private int[] spawnShiftRange;
@@ -12,7 +11,7 @@ public class FixedConfig {
 
     private Map<String, Float> playerAttributes;
 
-    private List<FixedConfigInventoryItemEntry> inventory;
+    private List<InventoryItemEntry> inventory;
 
     public int[] getSpawnShiftRange() {
         return spawnShiftRange;
@@ -26,27 +25,21 @@ public class FixedConfig {
         return playerAttributes;
     }
 
-    public List<FixedConfigInventoryItemEntry> getInventory() {
+    public List<InventoryItemEntry> getInventory() {
         return inventory;
     }
 
-    public Map<String, int[]> getUniqueItems() {
-        Map<String, int[]> returnValues = new HashMap<>();
-        inventory.forEach(item -> {
-            if (item.isUnique()) {
-                returnValues.put(item.getName(), new int[]{item.getCount(), item.getDamage(), item.getSlot()});
-            }
-        });
-        return returnValues;
+    public List<InventoryItemEntry> getUniqueItems() {
+        return inventory
+                .stream()
+                .filter(item -> item.isUnique() && item.isEditable())
+                .collect(Collectors.toList());
     }
 
-    public List<NonUniqueItem> getNonUniqueItems() {
-        List<NonUniqueItem> returnValues = new ArrayList<>();
-        inventory.forEach(item -> {
-            if (!item.isUnique()) {
-                returnValues.add(new NonUniqueItem(item.getName(), new int[]{item.getCount(), item.getDamage(), item.getSlot()}));
-            }
-        });
-        return returnValues;
+    public List<InventoryItemEntry> getNonUniqueItems() {
+        return inventory
+                .stream()
+                .filter(item -> !(item.isUnique() && item.isEditable()))
+                .collect(Collectors.toList());
     }
 }

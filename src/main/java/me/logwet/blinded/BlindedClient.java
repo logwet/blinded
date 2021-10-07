@@ -10,32 +10,32 @@ import org.apache.logging.log4j.Level;
 
 @Environment(EnvType.CLIENT)
 public class BlindedClient implements ClientModInitializer {
-	private static MinecraftClient MC;
-	private static double oldRenderDistance;
-	private static double oldFOV;
+    private static MinecraftClient MC;
+    private static double oldRenderDistance;
+    private static double oldFOV;
 
-	public static MinecraftClient getMC() {
+    public static MinecraftClient getMC() {
         return MC;
     }
 
-	public static void setMC(MinecraftClient mc) {
-		MC = mc;
-	}
+    public static void setMC(MinecraftClient mc) {
+        MC = mc;
+    }
 
-	public static ClientPlayerEntity getClientPlayerEntity() {
+    public static ClientPlayerEntity getClientPlayerEntity() {
         return getMC().player;
     }
 
-	public static void saveOldOptions() {
-		oldRenderDistance = Option.RENDER_DISTANCE.get(getMC().options);
-		oldFOV = Option.FOV.get(getMC().options);
+    public static void saveOldOptions() {
+        oldRenderDistance = Option.RENDER_DISTANCE.get(getMC().options);
+        oldFOV = Option.FOV.get(getMC().options);
 
 		Blinded.log(Level.INFO, "Saved Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
 	}
 
-	public static void resetOptions() {
-		Option.RENDER_DISTANCE.set(getMC().options, oldRenderDistance);
-		Option.FOV.set(getMC().options, oldFOV);
+    public static void resetOptions() {
+        Option.RENDER_DISTANCE.set(getMC().options, oldRenderDistance);
+        Option.FOV.set(getMC().options, oldFOV);
 
 		Blinded.log(Level.INFO, "Reset to Render Distance " + oldRenderDistance + " and FOV " + oldFOV);
 	}
@@ -60,7 +60,7 @@ public class BlindedClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		Blinded.log(Level.INFO, "Using Blinded v" + Blinded.VERSION + " by logwet!");
 
-		setMC(MinecraftClient.getInstance());
+        setMC(MinecraftClient.getInstance());
 
 		Blinded.commonConfigHandler();
 	}

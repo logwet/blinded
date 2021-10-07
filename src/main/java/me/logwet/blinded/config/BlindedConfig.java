@@ -1,16 +1,19 @@
 package me.logwet.blinded.config;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class BlindedConfig {
     private boolean f3Enabled = true;
 
     private boolean recipeBookEnabled = true;
 
-    private List<InventoryItemEntry> inventory;
+    private List<UserConfigInventoryItemEntry> inventory;
 
     public BlindedConfig() {
         inventory = new ArrayList<>();
@@ -24,18 +27,37 @@ public class BlindedConfig {
         return recipeBookEnabled;
     }
 
-    public List<InventoryItemEntry> getInventory() {
+    public List<UserConfigInventoryItemEntry> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<InventoryItemEntry> inventory) {
+    public void setInventory(List<UserConfigInventoryItemEntry> inventory) {
         this.inventory = inventory;
     }
 
-    public Map<Integer, String> getItems() {
-        Map<Integer, String> returnValues = new HashMap<>();
-        inventory.forEach(item -> returnValues.put(item.getSlot(), item.getName()));
-        return returnValues;
+    public Map<String, Integer> getItems() {
+        return inventory
+                .stream()
+                .collect(Collectors.toMap(UserConfigInventoryItemEntry::getName, UserConfigInventoryItemEntry::getSlot));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+
+        if (o instanceof List && (((List<Object>) o).size() != 0 && ((List<Object>) o).get(0) instanceof InventoryItemEntry)) {
+            Set<String> uniqueItems = ((List<InventoryItemEntry>) o)
+                    .stream()
+                    .map(InventoryItemEntry::getName)
+                    .collect(Collectors.toSet());
+            return getInventory()
+                    .stream()
+                    .map(UserConfigInventoryItemEntry::getName)
+                    .map(String::toUpperCase)
+                    .allMatch(uniqueItems::contains);
+        }
+        return false;
     }
 }
 
