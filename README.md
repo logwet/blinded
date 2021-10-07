@@ -8,13 +8,15 @@ you did bastion trades. Beat the dragon and reach the credits as usual.
 
 ![educated inventory](assets/educated_inventory.png)
 
-_The bundled inventory for the default config_
+_An example inventoy generated under the default config._  
+__Note that many of the items in the inventory have randomised counts.
+Refer to [`fixed_config.json`](src/main/resources/fixed_config.json) for the random distributions.__
 
 You cannot customise the number, type or durability of the items in your inventory but you can adjust what slot they're in.
 You do this through editing `.minecraft/config/blinded-X.X.X.json`.
 
-_(At the moment the slot of unstackable non-unique items, eg. the beds in classic, are not changeable. This may change
-in the future.)_
+_(At the moment the slot of non-unique items, eg. multiple beds or ender pearls (if there are more than one stack in the inv),
+are not changeable. This may change in the future.)_
 
 ```json
 {
