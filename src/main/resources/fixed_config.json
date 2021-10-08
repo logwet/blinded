@@ -75,6 +75,13 @@
       "unique": true
     },
     {
+      "name": "ender_pearl",
+      "count": "12-16",
+      "slot": 8,
+      "editable": true,
+      "unique": true
+    },
+    {
       "name": "iron_ingot",
       "count": "0-2",
       "slot": 9,
@@ -131,43 +138,50 @@
       "unique": true
     },
     {
+      "name": "string",
+      "count": "32-64",
+      "slot": 18,
+      "editable": true,
+      "unique": true
+    },
+    {
       "name": "soul_sand",
-      "count": "0-64",
+      "count": "1-64",
       "slot": 20,
       "editable": true,
       "unique": true
     },
     {
       "name": "leather",
-      "count": "0-48",
+      "count": "1-48",
       "slot": 21,
       "editable": true,
       "unique": true
     },
     {
       "name": "quartz",
-      "count": "0-32",
+      "count": "1-32",
       "slot": 22,
       "editable": true,
       "unique": true
     },
     {
       "name": "iron_nugget",
-      "count": "0-32",
+      "count": "1-32",
       "slot": 23,
       "editable": true,
       "unique": true
     },
     {
       "name": "fire_charge",
-      "count": "0-16",
+      "count": "1-16",
       "slot": 24,
       "editable": true,
       "unique": true
     },
     {
       "name": "magma_cream",
-      "count": "0-16",
+      "count": "1-16",
       "slot": 25,
       "editable": true,
       "unique": true
@@ -194,6 +208,53 @@
       "unique": true
     },
     {
+      "name": "potion",
+      "tags": "{Potion:'minecraft:fire_resistance'}",
+      "count": "0-4",
+      "slot": 29,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "enchanted_book",
+      "tags": "{StoredEnchantments:[{id:soul_speed,lvl:2}]}",
+      "count": "0-4",
+      "slot": 30,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "splash_potion",
+      "tags": "{Potion:'minecraft:fire_resistance'}",
+      "count": "0-4",
+      "slot": 31,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "polished_blackstone_bricks",
+      "count": "0-4",
+      "slot": 32,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "netherrack",
+      "count": "0-8",
+      "slot": 33,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "iron_boots",
+      "tags": "{Enchantments:[{id:soul_speed,lvl:1}]}",
+      "count": "0-4",
+      "damage": 20,
+      "slot": 36,
+      "editable": true,
+      "unique": true
+    },
+    {
       "name": "golden_helmet",
       "count": "0-9",
       "damage": 15,
@@ -207,20 +268,6 @@
       "slot": 40,
       "editable": true,
       "unique": true
-    },
-    {
-      "name": "ender_pearl",
-      "count": "12-16",
-      "slot": -1,
-      "editable": true,
-      "unique": false
-    },
-    {
-      "name": "string",
-      "count": "32-64",
-      "slot": -1,
-      "editable": true,
-      "unique": false
     },
     {
       "name": "ender_pearl",
