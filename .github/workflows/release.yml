@@ -71,8 +71,7 @@ jobs:
       - name: Delete dev artifacts
         if: ${{ always() }}
         run: |
-        find build/libs/ -name 'blinded-*-dev.jar' -delete
-        find build/libs/ -name 'blinded-*-sources.jar' -delete
+          find build/libs/ -name 'blinded-*-dev.jar' -delete
 
       - name: Upload all artifacts
         uses: xresloader/upload-to-github-release@v1
