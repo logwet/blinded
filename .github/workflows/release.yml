@@ -20,7 +20,7 @@ jobs:
 
       - name: Set output
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
@@ -65,8 +65,6 @@ jobs:
             Make sure to read the [README](README.md) for instructions on how the mod works and how to use it.
 
             Read the [FAQ Section](README.md#faq) if you're having problems.
-
-            For end users: Make sure you are running the release version of the mod ie. `blinded-x.x.x.jar` instead of `blinded-x-x-x-dev.jar`
           draft: true
           prerelease: false
 
@@ -77,7 +75,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: 'build/libs/blinded-*.jar'
-          delete_file: 'build/libs/blinded-*-dev.jar;build/libs/blinded-*-sources.jar'
           release_id: ${{ steps.create_release.outputs.id }}
           overwrite: false
           verbose: true
+
+      - name: Delete dev release artifacts
+        uses: mknejp/delete-release-assets@v1
+        if: ${{ always() }}
+        with:
+          token: ${{ github.token }}
+          tag: ${{ steps.vars.outputs.tag }}
+          assets: |
+            blinded-*-dev.jar
+            blinded-*-sources.jar
