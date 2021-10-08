@@ -13,7 +13,6 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.Wearable;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.server.MinecraftServer;
@@ -21,10 +20,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
@@ -37,7 +38,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -226,8 +226,6 @@ public class Blinded {
 
         playerAttributes = fixedConfig.getPlayerAttributes();
 
-        ItemsMapping.readMappingsFromFile();
-
         log(Level.INFO, "Loaded fixed configs");
     }
 
@@ -258,7 +256,7 @@ public class Blinded {
     private static void manageConfigs() throws FileNotFoundException {
         try {
             readConfig();
-            if (!config.equals(uniqueFixedConfigItems)) {
+            if (!config.matches(uniqueFixedConfigItems)) {
                 throw new MalformedConfigException("User config is setup wrong!");
             }
         } catch (Exception e) {
@@ -289,28 +287,14 @@ public class Blinded {
         }
     }
 
-    // Thank god for reflection ThankEgg
     @Nullable
     private static ItemStack getItemStackFromName(String name) {
-        name = Objects.requireNonNull(name).toUpperCase();
+        name = Objects.requireNonNull(name).toLowerCase();
+        String finalName = name;
         try {
-            String target;
-
-            // Yes, this is very janky, yes, it also might be the best way to do it
-            if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-                target = FabricLoader.getInstance().getMappingResolver()
-                        .mapFieldName("named", "net.minecraft.item.Items",
-                                name, "net.minecraft.item.Item");
-            } else {
-                target = FabricLoader.getInstance().getMappingResolver()
-                        .mapFieldName("intermediary", "net.minecraft.class_1802",
-                                Objects.requireNonNull(ItemsMapping.getMappings().get(name)),
-                                "net.minecraft.class_1792");
-            }
-
-            Field f = Items.class.getDeclaredField(target);
-
-            Item item = (Item) Objects.requireNonNull(f.get(null));
+            Item item = (Item) Registry.ITEM
+                    .getOrEmpty(new Identifier(name))
+                    .orElseThrow(() -> new ItemNotFoundException("Item " + finalName + " not found in registry!"));
             requiredItems.add(item);
 
             return new ItemStack(item);
