@@ -249,7 +249,7 @@
     {
       "name": "GOLDEN_HELMET",
       "count": "1-1",
-      "damage": 0,
+      "damage": 15,
       "slot": 39,
       "editable": true,
       "unique": true
