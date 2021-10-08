@@ -2,6 +2,7 @@ package me.logwet.blinded;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mojang.brigadier.StringReader;
 import me.logwet.blinded.config.*;
 import me.logwet.blinded.mixin.common.HungerManagerAccessor;
 import me.logwet.blinded.mixin.common.ServerPlayerEntityAccessor;
@@ -13,6 +14,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Wearable;
+import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -304,7 +306,14 @@ public class Blinded {
         }
     }
 
-    private static boolean applyItemStack(String name, int count, int damage, int slot, ServerPlayerEntity serverPlayerEntity) {
+    private static boolean applyItemStack(
+            @NotNull String name,
+            @Nullable String tags,
+            int count,
+            @Nullable Integer damage,
+            int slot,
+            @NotNull ServerPlayerEntity serverPlayerEntity
+    ) {
         try {
             if (count > 0) {
                 if (slot >= -1 && slot <= 40) {
@@ -316,7 +325,11 @@ public class Blinded {
                         itemStack.setCount(count);
                     }
 
-                    if (itemStack.isDamageable()) {
+                    if (!Objects.isNull(tags)) {
+                        itemStack.setTag((new StringNbtReader(new StringReader(tags))).parseCompoundTag());
+                    }
+
+                    if (!Objects.isNull(damage) && itemStack.isDamageable()) {
                         itemStack.setDamage(damage);
                     }
 
@@ -329,8 +342,7 @@ public class Blinded {
                         serverPlayerEntity.inventory.armor.set(MobEntity.getPreferredEquipmentSlot(itemStack).getEntitySlotId(), itemStack.copy());
                     } else if (slot == 40) {
                         serverPlayerEntity.inventory.offHand.set(0, itemStack.copy());
-                    }
-                    else {
+                    } else {
                         serverPlayerEntity.inventory.insertStack(slot, itemStack.copy());
                     }
 
@@ -358,6 +370,7 @@ public class Blinded {
                 .stream()
                 .map(item -> applyItemStack(
                         item.getName(),
+                        item.getTags(),
                         item.getCount(randomInstance),
                         item.getDamage(),
                         userConfigItems.getOrDefault(item.getName(), item.getPrettySlot()) - 1,
@@ -370,6 +383,7 @@ public class Blinded {
                 .stream()
                 .map(item -> applyItemStack(
                         item.getName(),
+                        item.getTags(),
                         item.getCount(randomInstance),
                         item.getDamage(),
                         item.getSlot(),
