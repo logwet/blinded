@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import me.logwet.blinded.config.*;
 import me.logwet.blinded.mixin.common.HungerManagerAccessor;
 import me.logwet.blinded.mixin.common.ServerPlayerEntityAccessor;
-import me.logwet.blinded.util.ItemsMapping;
 import me.logwet.blinded.util.WeightedCollection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
