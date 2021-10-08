@@ -1,6 +1,6 @@
 # Blinded
 
-- [Noverworld](#noverworld)
+- [Blinded](#blinded)
   * [About](#about)
   * [Creating your own custom inventory](#creating-your-own-custom-inventory)
   * [Support](#support)
