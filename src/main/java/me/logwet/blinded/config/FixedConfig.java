@@ -1,6 +1,6 @@
 package me.logwet.blinded.config;
 
-import me.logwet.noverworld.util.RandomDistribution;
+import me.logwet.blinded.util.RandomDistribution;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
