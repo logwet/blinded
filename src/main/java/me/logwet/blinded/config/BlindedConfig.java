@@ -2,7 +2,6 @@ package me.logwet.blinded.config;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,8 +14,15 @@ public class BlindedConfig {
 
     private List<UserConfigInventoryItemEntry> inventory;
 
-    public BlindedConfig() {
-        inventory = new ArrayList<>();
+    public BlindedConfig(List<UserConfigInventoryItemEntry> inventory) {
+        this.inventory = inventory;
+    }
+
+    public static BlindedConfig fromFixedConfigs(List<InventoryItemEntry> inventory) {
+        return new BlindedConfig(inventory
+                .stream()
+                .map(item -> new UserConfigInventoryItemEntry(item.getName(), item.getPrettySlot()))
+                .collect(Collectors.toList()));
     }
 
     @NotNull
@@ -32,10 +38,6 @@ public class BlindedConfig {
     @NotNull
     public List<UserConfigInventoryItemEntry> getInventory() {
         return inventory;
-    }
-
-    public void setInventory(List<UserConfigInventoryItemEntry> inventory) {
-        this.inventory = inventory;
     }
 
     @NotNull
