@@ -58,7 +58,7 @@ public class BlindedClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		Blinded.log(Level.INFO, "Using Blinded v" + Blinded.VERSION + " by logwet!");
+		Blinded.onInitialize();
 
 		setMC(MinecraftClient.getInstance());
 
