@@ -272,38 +272,21 @@ public class Blinded {
         }
     }
 
-    @Nullable
-    private static ItemStack getItemStackFromName(String name) {
-        name = Objects.requireNonNull(name).toLowerCase();
-        String finalName = name;
-        try {
-            Item item = (Item) Registry.ITEM
-                    .getOrEmpty(new Identifier(name))
-                    .orElseThrow(() -> new ItemNotFoundException("Item " + finalName + " not found in registry!"));
-            requiredItems.add(item);
-
-            return new ItemStack(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log(Level.ERROR, "Unable to find the Item type " + name + ", please double check your config. Replaced with empty slot.");
-            return null;
-        }
-    }
-
     private static boolean applyItemStack(
             @NotNull String name,
             @Nullable String tags,
             int count,
             @Nullable Integer damage,
             int slot,
+            @Nullable Item item,
             @NotNull ServerPlayerEntity serverPlayerEntity
     ) {
         try {
             if (count > 0) {
                 if (slot >= -1 && slot <= 40) {
-                    ItemStack itemStack = getItemStackFromName(name);
+                    if (Objects.isNull(item)) return false;
 
-                    if (Objects.isNull(itemStack)) return false;
+                    ItemStack itemStack = new ItemStack(item);
 
                     if (itemStack.isStackable()) {
                         itemStack.setCount(count);
@@ -358,6 +341,7 @@ public class Blinded {
                         item.getCount(randomInstance),
                         item.getDamage(),
                         userConfigItems.getOrDefault(item.getName(), item.getPrettySlot()) - 1,
+                        item.getItem(),
                         serverPlayerEntity)
                 )
                 .collect(Collectors.toSet())
@@ -371,6 +355,7 @@ public class Blinded {
                         item.getCount(randomInstance),
                         item.getDamage(),
                         item.getSlot(),
+                        item.getItem(),
                         serverPlayerEntity)
                 )
                 .collect(Collectors.toSet())
@@ -395,6 +380,7 @@ public class Blinded {
     }
 
     private static void unlockRecipes(ServerPlayerEntity serverPlayerEntity) {
+        Set<Item> requiredItems = fixedConfig.getRequiredItems();
         List<Recipe<?>> recipesToUnlock = Objects.requireNonNull(getMS().getRecipeManager().values())
                 .stream()
                 .filter(recipe -> requiredItems.contains(recipe.getOutput().getItem()))
