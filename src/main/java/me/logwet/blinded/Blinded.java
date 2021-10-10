@@ -183,10 +183,14 @@ public class Blinded {
 
         float spawnShiftAngleRadians = spawnShiftAngle * 0.017453292F;
 
+        int yHeight = spawnYHeightDistribution.getNext(randomInstance);
+
+        BlockPos origin = BlockPos.ORIGIN;
+
         spawnPos = new BlockPos(
-                -Math.round(spawnShiftLength * MathHelper.sin(spawnShiftAngleRadians)),
-                spawnYHeightDistribution.getNext(randomInstance),
-                Math.round(spawnShiftLength * MathHelper.cos(spawnShiftAngleRadians))
+                origin.getX() - Math.round(spawnShiftLength * MathHelper.sin(spawnShiftAngleRadians)),
+                yHeight,
+                origin.getZ() + Math.round(spawnShiftLength * MathHelper.cos(spawnShiftAngleRadians))
         );
 
         log(Level.INFO, "Reset randoms using world seed");
