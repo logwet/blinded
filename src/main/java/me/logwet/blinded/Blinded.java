@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.StringReader;
 import me.logwet.blinded.config.*;
+import me.logwet.blinded.mixin.common.ChunkGeneratorAccessor;
 import me.logwet.blinded.mixin.common.HungerManagerAccessor;
 import me.logwet.blinded.mixin.common.ServerPlayerEntityAccessor;
 import me.logwet.blinded.util.RandomDistribution;
@@ -22,10 +23,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -185,7 +183,19 @@ public class Blinded {
 
         int yHeight = spawnYHeightDistribution.getNext(randomInstance);
 
-        BlockPos origin = BlockPos.ORIGIN;
+        List<ChunkPos> strongholdLocations = ((ChunkGeneratorAccessor) getOverworld().getChunkManager().getChunkGenerator())
+                .getStrongholdLocations()
+                .stream()
+                .filter(location -> location.getCenterBlockPos().getSquaredDistance(Vec3i.ZERO) <= 6000*6000)
+                .limit(9)
+                .collect(Collectors.toList());
+
+        BlockPos origin = strongholdLocations
+                .stream()
+                .skip((long) (strongholdLocations.size() * randomInstance.nextDouble()))
+                .findFirst()
+                .map(ChunkPos::getCenterBlockPos)
+                .orElse(BlockPos.ORIGIN);
 
         spawnPos = new BlockPos(
                 origin.getX() - Math.round(spawnShiftLength * MathHelper.sin(spawnShiftAngleRadians)),

@@ -4,6 +4,7 @@
   "package": "me.logwet.blinded.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "common.ChunkGeneratorAccessor",
     "common.HungerManagerAccessor",
     "common.MinecraftServerMixin",
     "common.PlayerManagerMixin",
