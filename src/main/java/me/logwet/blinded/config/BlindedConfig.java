@@ -8,16 +8,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlindedConfig {
+    @NotNull
     private boolean f3Enabled = true;
 
-    private boolean recipeBookEnabled = true;
+    @NotNull
+    private Boolean recipeBookEnabled = true;
 
+    @NotNull
     private List<UserConfigInventoryItemEntry> inventory;
 
-    public BlindedConfig(List<UserConfigInventoryItemEntry> inventory) {
+    public BlindedConfig(@NotNull List<UserConfigInventoryItemEntry> inventory) {
         this.inventory = inventory;
     }
 
+    @NotNull
     public static BlindedConfig fromFixedConfigs(List<InventoryItemEntry> inventory) {
         return new BlindedConfig(inventory
                 .stream()

@@ -3,7 +3,10 @@ package me.logwet.blinded;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.StringReader;
-import me.logwet.blinded.config.*;
+import me.logwet.blinded.config.BlindedConfig;
+import me.logwet.blinded.config.FixedConfig;
+import me.logwet.blinded.config.InventoryItemEntry;
+import me.logwet.blinded.config.MalformedConfigException;
 import me.logwet.blinded.mixin.common.ChunkGeneratorAccessor;
 import me.logwet.blinded.mixin.common.HungerManagerAccessor;
 import me.logwet.blinded.mixin.common.ServerPlayerEntityAccessor;
@@ -22,9 +25,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
@@ -282,38 +283,21 @@ public class Blinded {
         }
     }
 
-    @Nullable
-    private static ItemStack getItemStackFromName(String name) {
-        name = Objects.requireNonNull(name).toLowerCase();
-        String finalName = name;
-        try {
-            Item item = (Item) Registry.ITEM
-                    .getOrEmpty(new Identifier(name))
-                    .orElseThrow(() -> new ItemNotFoundException("Item " + finalName + " not found in registry!"));
-            requiredItems.add(item);
-
-            return new ItemStack(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log(Level.ERROR, "Unable to find the Item type " + name + ", please double check your config. Replaced with empty slot.");
-            return null;
-        }
-    }
-
     private static boolean applyItemStack(
             @NotNull String name,
             @Nullable String tags,
             int count,
             @Nullable Integer damage,
             int slot,
+            @Nullable Item item,
             @NotNull ServerPlayerEntity serverPlayerEntity
     ) {
         try {
             if (count > 0) {
                 if (slot >= -1 && slot <= 40) {
-                    ItemStack itemStack = getItemStackFromName(name);
+                    if (Objects.isNull(item)) return false;
 
-                    if (Objects.isNull(itemStack)) return false;
+                    ItemStack itemStack = new ItemStack(item);
 
                     if (itemStack.isStackable()) {
                         itemStack.setCount(count);
@@ -368,6 +352,7 @@ public class Blinded {
                         item.getCount(randomInstance),
                         item.getDamage(),
                         userConfigItems.getOrDefault(item.getName(), item.getPrettySlot()) - 1,
+                        item.getItem(),
                         serverPlayerEntity)
                 )
                 .collect(Collectors.toSet())
@@ -381,6 +366,7 @@ public class Blinded {
                         item.getCount(randomInstance),
                         item.getDamage(),
                         item.getSlot(),
+                        item.getItem(),
                         serverPlayerEntity)
                 )
                 .collect(Collectors.toSet())
@@ -405,6 +391,7 @@ public class Blinded {
     }
 
     private static void unlockRecipes(ServerPlayerEntity serverPlayerEntity) {
+        Set<Item> requiredItems = fixedConfig.getRequiredItems();
         List<Recipe<?>> recipesToUnlock = Objects.requireNonNull(getMS().getRecipeManager().values())
                 .stream()
                 .filter(recipe -> requiredItems.contains(recipe.getOutput().getItem()))
