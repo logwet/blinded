@@ -1,5 +1,7 @@
 # Blinded
 
+[![Build and Release Artifacts](https://github.com/logwet/blinded/actions/workflows/build.yml/badge.svg)](https://github.com/logwet/blinded/actions/workflows/build.yml)
+
 - [Blinded](#blinded)
   * [About](#about)
   * [Creating your own custom inventory](#creating-your-own-custom-inventory)
