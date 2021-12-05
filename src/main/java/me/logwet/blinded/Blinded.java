@@ -70,6 +70,7 @@ public class Blinded {
     private static RandomDistribution spawnYHeightDistribution;
     private static RandomDistribution spawnShiftRange;
     private static Map<String, Float> playerAttributes;
+    private static RandomDistribution startingTime;
 
     private static float spawnYaw = 0;
     private static BlockPos spawnPos = new BlockPos(0, 9, 0);
@@ -194,7 +195,15 @@ public class Blinded {
                 origin.getZ() + Math.round(spawnShiftLength * MathHelper.cos(spawnShiftAngleRadians))
         );
 
+        startingTime.createDistribution(randomInstance);
+
         log(Level.INFO, "Reset randoms using world seed");
+    }
+
+    private static void setTime() {
+        for (ServerWorld serverWorld : getMS().getWorlds()) {
+            serverWorld.setTimeOfDay(startingTime.getNext(randomInstance));
+        }
     }
 
     @NotNull
@@ -217,6 +226,7 @@ public class Blinded {
         spawnShiftRange = fixedConfig.getSpawnShiftRange();
 
         playerAttributes = fixedConfig.getPlayerAttributes();
+        startingTime = fixedConfig.getStartingTime();
 
         log(Level.INFO, "Loaded fixed configs");
     }
@@ -467,6 +477,7 @@ public class Blinded {
 
         if (worldIsNew) {
             resetRandoms();
+            setTime();
         }
         log(Level.INFO, worldIsNew ? "Detected creation of a new world" : "Detected reopening of a previously created world");
     }
