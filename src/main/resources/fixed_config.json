@@ -14,6 +14,9 @@
     "hunger": 15.0,
     "saturation": 0.0
   },
+  "startingTime": {
+    "6600-13800": 100
+  },
   "inventory": [
     {
       "name": "iron_axe",
