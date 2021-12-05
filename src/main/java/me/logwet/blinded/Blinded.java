@@ -187,8 +187,8 @@ public class Blinded {
         List<ChunkPos> strongholdLocations = ((ChunkGeneratorAccessor) getOverworld().getChunkManager().getChunkGenerator())
                 .getStrongholdLocations()
                 .stream()
-                .filter(location -> location.getCenterBlockPos().getSquaredDistance(Vec3i.ZERO) <= 6000*6000)
-                .limit(9)
+                .filter(location -> location.getCenterBlockPos().getSquaredDistance(Vec3i.ZERO) <= 9000000)
+                .limit(3)
                 .collect(Collectors.toList());
 
         BlockPos origin = strongholdLocations
