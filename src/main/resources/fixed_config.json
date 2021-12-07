@@ -87,7 +87,7 @@
     },
     {
       "name": "iron_ingot",
-      "count": "0-2",
+      "count": "0-6",
       "slot": 9,
       "editable": true,
       "unique": true
@@ -102,156 +102,78 @@
     {
       "name": "glowstone_dust",
       "count": "12-48",
-      "slot": 12,
+      "slot": 11,
       "editable": true,
       "unique": true
     },
     {
       "name": "blaze_rod",
       "count": "6-8",
-      "slot": 13,
+      "slot": 12,
       "editable": true,
       "unique": true
     },
     {
       "name": "obsidian",
       "count": "10-20",
-      "slot": 14,
+      "slot": 13,
       "editable": true,
       "unique": true
     },
     {
       "name": "crying_obsidian",
       "count": "4-12",
-      "slot": 15,
+      "slot": 14,
       "editable": true,
       "unique": true
     },
     {
       "name": "arrow",
       "count": "0-64",
-      "slot": 16,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "gravel",
-      "count": "48-64",
-      "slot": 17,
+      "slot": 15,
       "editable": true,
       "unique": true
     },
     {
       "name": "string",
       "count": "32-64",
-      "slot": 18,
+      "slot": 16,
       "editable": true,
       "unique": true
     },
     {
       "name": "soul_sand",
       "count": "1-64",
-      "slot": 20,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "leather",
-      "count": "1-48",
-      "slot": 21,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "quartz",
-      "count": "1-32",
-      "slot": 22,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "iron_nugget",
-      "count": "1-32",
-      "slot": 23,
+      "slot": 17,
       "editable": true,
       "unique": true
     },
     {
       "name": "fire_charge",
       "count": "1-16",
-      "slot": 24,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "magma_cream",
-      "count": "1-16",
-      "slot": 25,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "bone",
-      "count": "0-6",
-      "slot": 26,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "rotten_flesh",
-      "count": "0-16",
-      "slot": 27,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "gold_nugget",
-      "count": "0-8",
-      "slot": 28,
+      "slot": 18,
       "editable": true,
       "unique": true
     },
     {
       "name": "potion",
       "tags": "{Potion:'minecraft:fire_resistance'}",
-      "count": "0-4",
-      "slot": 29,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "enchanted_book",
-      "tags": "{StoredEnchantments:[{id:soul_speed,lvl:2}]}",
-      "count": "0-4",
-      "slot": 30,
+      "count": "0-1",
+      "slot": 19,
       "editable": true,
       "unique": true
     },
     {
       "name": "splash_potion",
       "tags": "{Potion:'minecraft:fire_resistance'}",
-      "count": "0-4",
-      "slot": 31,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "polished_blackstone_bricks",
-      "count": "0-4",
-      "slot": 32,
-      "editable": true,
-      "unique": true
-    },
-    {
-      "name": "netherrack",
-      "count": "0-8",
-      "slot": 33,
+      "count": "0-1",
+      "slot": 20,
       "editable": true,
       "unique": true
     },
     {
       "name": "iron_boots",
-      "tags": "{Enchantments:[{id:soul_speed,lvl:1}]}",
+      "tags": "{Enchantments:[{id:soul_speed,lvl:3}]}",
       "count": "0-4",
       "damage": 20,
       "slot": 36,
