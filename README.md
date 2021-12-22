@@ -14,7 +14,7 @@ When you create a new world, you will spawn in the overworld at a portal at post
 Your inventory contains a set of standard post blind items you would have in a usual hypermodern RSG situation where
 you did bastion trades. Beat the dragon and reach the credits as usual.
 
-![educated inventory](assets/educated_inventory.png)
+![pre stronghold inventory](assets/pre_stronghold_inventory.png)
 
 _An example inventoy generated under the default config._  
 __Note that many of the items in the inventory have randomised counts.
