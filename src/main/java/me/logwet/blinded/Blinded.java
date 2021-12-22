@@ -1,5 +1,6 @@
 package me.logwet.blinded;
 
+import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.StringReader;
@@ -14,6 +15,9 @@ import me.logwet.blinded.util.RandomDistribution;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.block.pattern.BlockPattern;
+import net.minecraft.block.pattern.BlockPattern.Result;
+import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,11 +26,14 @@ import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Unit;
 import net.minecraft.util.math.*;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -65,13 +72,13 @@ public class Blinded {
     private static Random randomInstance;
     private static List<InventoryItemEntry> uniqueFixedConfigItems;
     private static List<InventoryItemEntry> nonUniqueFixedConfigItems;
-    private static RandomDistribution spawnYHeightDistribution;
-    private static RandomDistribution spawnShiftRange;
     private static Map<String, Float> playerAttributes;
     private static RandomDistribution startingTime;
 
     private static float spawnYaw = 0;
     private static BlockPos spawnPos = new BlockPos(0, 9, 0);
+
+    private static final ChunkTicketType<Unit> SPAWN_TICKET = ChunkTicketType.create("blinded_spawn", (unit, unit2) -> 0, 1);
 
     public static void log(Level level, String message) {
         logger.log(level, "[Blinded v" + VERSION + "] " + message);
@@ -167,23 +174,7 @@ public class Blinded {
     private static void resetRandoms() {
         randomInstance = newRandomInstance();
 
-        spawnYHeightDistribution.createDistribution(randomInstance);
-        spawnShiftRange.createDistribution(randomInstance);
-
         spawnYaw = getRandomAngle();
-
-        float spawnShiftAngle = getRandomAngle();
-        float spawnShiftLength;
-
-        try {
-            spawnShiftLength = (float) spawnShiftRange.getNext(randomInstance);
-        } catch (Exception e) {
-            spawnShiftLength = 0;
-        }
-
-        float spawnShiftAngleRadians = spawnShiftAngle * 0.017453292F;
-
-        int yHeight = spawnYHeightDistribution.getNext(randomInstance);
 
         List<ChunkPos> strongholdLocations = ((ChunkGeneratorAccessor) getOverworld().getChunkManager().getChunkGenerator())
                 .getStrongholdLocations()
@@ -199,11 +190,18 @@ public class Blinded {
                 .map(ChunkPos::getCenterBlockPos)
                 .orElse(BlockPos.ORIGIN);
 
-        spawnPos = new BlockPos(
-                origin.getX() - Math.round(spawnShiftLength * MathHelper.sin(spawnShiftAngleRadians)),
-                yHeight,
-                origin.getZ() + Math.round(spawnShiftLength * MathHelper.cos(spawnShiftAngleRadians))
-        );
+        origin = origin.add(4, 0, 4);
+        ChunkPos chunkPos = new ChunkPos(origin);
+
+        getOverworld().getChunkManager().addTicket(
+            SPAWN_TICKET,
+            chunkPos,
+            1,
+            Unit.INSTANCE);
+
+        int yHeight = getOverworld().getChunk(chunkPos.x, chunkPos.z).sampleHeightmap(Type.MOTION_BLOCKING, origin.getX() & 15, origin.getZ() & 15) + 1;
+
+        spawnPos = origin.add(0, yHeight, 0);
 
         startingTime.createDistribution(randomInstance);
 
@@ -231,9 +229,6 @@ public class Blinded {
 
         uniqueFixedConfigItems = fixedConfig.getUniqueItems();
         nonUniqueFixedConfigItems = fixedConfig.getNonUniqueItems();
-
-        spawnYHeightDistribution = fixedConfig.getSpawnYHeightDistribution();
-        spawnShiftRange = fixedConfig.getSpawnShiftRange();
 
         playerAttributes = fixedConfig.getPlayerAttributes();
         startingTime = fixedConfig.getStartingTime();
@@ -418,19 +413,19 @@ public class Blinded {
     private static void sendToBlind(ServerPlayerEntity serverPlayerEntity) {
         serverPlayerEntity.sendMessage(new LiteralText("Please wait for chunks at target to be generated. Don't open your inventory.").formatted(Formatting.RED), true);
 
-        serverPlayerEntity.refreshPositionAndAngles(spawnPos, spawnYaw, 0);
         serverPlayerEntity.setVelocity(Vec3d.ZERO);
 
-        serverPlayerEntity.setInNetherPortal(spawnPos);
+        playerLog(Level.INFO, "Attemping spawn at " + spawnPos.toShortString() + " with yaw " + spawnYaw, serverPlayerEntity);
 
-        playerLog(Level.INFO, "Attemping spawn at " + spawnPos.toShortString() + " with yaw " + serverPlayerEntity.yaw, serverPlayerEntity);
-
-        if (!getOverworld().getPortalForcer().usePortal(serverPlayerEntity, 0)) {
-            getOverworld().getPortalForcer().createPortal(serverPlayerEntity);
-            getOverworld().getPortalForcer().usePortal(serverPlayerEntity, 0);
-        }
-
-        serverPlayerEntity.netherPortalCooldown = serverPlayerEntity.getDefaultNetherPortalCooldown();
+        serverPlayerEntity.teleport(
+            getOverworld(),
+            spawnPos.getX() + 0.5D,
+            spawnPos.getY(),
+            spawnPos.getZ() + 0.5D,
+            spawnYaw,
+            0
+        );
+        serverPlayerEntity.setHeadYaw(spawnYaw);
 
         serverPlayerEntity.sendMessage(new LiteralText(""), true);
 

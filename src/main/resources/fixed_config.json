@@ -1,11 +1,9 @@
 {
   "spawnShiftRange": {
-    "0-345": 100
+    "0-0": 100
   },
   "spawnYHeightDistribution": {
-    "32-49": 20,
-    "50-70": 60,
-    "71-100": 20
+    "0-0": 100
   },
   "playerAttributes": {
     "health": 14.0,
