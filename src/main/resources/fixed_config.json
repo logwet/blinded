@@ -11,7 +11,7 @@
     "saturation": 0.0
   },
   "startingTime": {
-    "6600-13800": 100
+    "9600-15600": 100
   },
   "inventory": [
     {
@@ -39,7 +39,7 @@
       "unique": true
     },
     {
-      "name": "lava_bucket",
+      "name": "water_bucket",
       "count": "1-1",
       "slot": 3,
       "editable": true,
@@ -47,7 +47,7 @@
     },
     {
       "name": "nether_bricks",
-      "count": "16-34",
+      "count": "4-48",
       "slot": 4,
       "editable": true,
       "unique": true
@@ -67,9 +67,8 @@
       "unique": true
     },
     {
-      "name": "flint_and_steel",
-      "count": "1-1",
-      "damage": 2,
+      "name": "ender_eye",
+      "count": "2-2",
       "slot": 7,
       "editable": true,
       "unique": true
@@ -82,72 +81,65 @@
       "unique": true
     },
     {
-      "name": "iron_ingot",
-      "count": "0-6",
+      "name": "oak_planks",
+      "count": "9-18",
       "slot": 9,
       "editable": true,
       "unique": true
     },
     {
-      "name": "oak_planks",
-      "count": "0-21",
+      "name": "glowstone_dust",
+      "count": "16-48",
       "slot": 10,
       "editable": true,
       "unique": true
     },
     {
-      "name": "glowstone_dust",
-      "count": "12-48",
+      "name": "blaze_rod",
+      "count": "6-6",
       "slot": 11,
       "editable": true,
       "unique": true
     },
     {
-      "name": "blaze_rod",
-      "count": "6-8",
+      "name": "obsidian",
+      "count": "0-4",
       "slot": 12,
       "editable": true,
       "unique": true
     },
     {
-      "name": "obsidian",
-      "count": "10-20",
-      "slot": 13,
-      "editable": true,
-      "unique": true
-    },
-    {
       "name": "crying_obsidian",
-      "count": "4-12",
-      "slot": 14,
+      "count": "0-12",
+      "slot": 13,
       "editable": true,
       "unique": true
     },
     {
       "name": "arrow",
       "count": "0-64",
-      "slot": 15,
+      "slot": 14,
       "editable": true,
       "unique": true
     },
     {
       "name": "string",
+      "count": "36-64",
+      "slot": 15,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "soul_sand",
       "count": "32-64",
       "slot": 16,
       "editable": true,
       "unique": true
     },
     {
-      "name": "soul_sand",
-      "count": "1-64",
-      "slot": 17,
-      "editable": true,
-      "unique": true
-    },
-    {
       "name": "fire_charge",
-      "count": "1-16",
-      "slot": 18,
+      "count": "1-2",
+      "slot": 17,
       "editable": true,
       "unique": true
     },
@@ -155,7 +147,7 @@
       "name": "potion",
       "tags": "{Potion:'minecraft:fire_resistance'}",
       "count": "0-1",
-      "slot": 19,
+      "slot": 18,
       "editable": true,
       "unique": true
     },
@@ -163,6 +155,14 @@
       "name": "splash_potion",
       "tags": "{Potion:'minecraft:fire_resistance'}",
       "count": "0-1",
+      "slot": 19,
+      "editable": true,
+      "unique": true
+    },
+    {
+      "name": "flint_and_steel",
+      "count": "0-1",
+      "damage": 2,
       "slot": 20,
       "editable": true,
       "unique": true
@@ -186,21 +186,21 @@
     },
     {
       "name": "bread",
-      "count": "0-1",
+      "count": "1-4",
       "slot": 40,
       "editable": true,
       "unique": true
     },
     {
       "name": "ender_pearl",
-      "count": "0-16",
+      "count": "0-2",
       "slot": -1,
       "editable": true,
       "unique": false
     },
     {
       "name": "string",
-      "count": "0-16",
+      "count": "0-32",
       "slot": -1,
       "editable": true,
       "unique": false
