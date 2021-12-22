@@ -6,8 +6,8 @@
     "0-0": 100
   },
   "playerAttributes": {
-    "health": 14.0,
-    "hunger": 15.0,
+    "health": 16.0,
+    "hunger": 20.0,
     "saturation": 0.0
   },
   "startingTime": {
