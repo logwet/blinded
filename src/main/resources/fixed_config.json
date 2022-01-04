@@ -82,7 +82,7 @@
     },
     {
       "name": "oak_planks",
-      "count": "9-18",
+      "count": "12-18",
       "slot": 9,
       "editable": true,
       "unique": true
@@ -110,7 +110,7 @@
     },
     {
       "name": "crying_obsidian",
-      "count": "0-12",
+      "count": "0-16",
       "slot": 13,
       "editable": true,
       "unique": true
@@ -124,7 +124,7 @@
     },
     {
       "name": "string",
-      "count": "48-64",
+      "count": "36-64",
       "slot": 15,
       "editable": true,
       "unique": true
