@@ -124,7 +124,7 @@
     },
     {
       "name": "string",
-      "count": "36-64",
+      "count": "48-64",
       "slot": 15,
       "editable": true,
       "unique": true
