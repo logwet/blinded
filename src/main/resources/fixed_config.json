@@ -110,7 +110,7 @@
     },
     {
       "name": "crying_obsidian",
-      "count": "0-16",
+      "count": "6-16",
       "slot": 13,
       "editable": true,
       "unique": true
@@ -124,7 +124,7 @@
     },
     {
       "name": "string",
-      "count": "36-64",
+      "count": "48-64",
       "slot": 15,
       "editable": true,
       "unique": true
